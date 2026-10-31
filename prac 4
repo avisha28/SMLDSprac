@@ -1,0 +1,32 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Parameters
+num_samples = 10000   # number of repetitions
+sample_size = 30      # size of each sample
+
+# Choose a non-normal distribution: Exponential
+# (You can also try Uniform, Binomial, etc.)
+population = np.random.exponential(scale=2.0, size=num_samples * sample_size)
+
+# Collect sample means
+sample_means = []
+for i in range(num_samples):
+    sample = np.random.exponential(scale=2.0, size=sample_size)
+    sample_means.append(np.mean(sample))
+
+# Plotting
+plt.figure(figsize=(14, 6))
+
+# Original distribution
+plt.subplot(1, 2, 1)
+sns.histplot(population, bins=50, kde=True, color="skyblue")
+plt.title("Original Exponential Distribution")
+
+# Distribution of sample means
+plt.subplot(1, 2, 2)
+sns.histplot(sample_means, bins=50, kde=True, color="salmon")
+plt.title(f"Distribution of Sample Means (n={sample_size})")
+
+plt.show()
