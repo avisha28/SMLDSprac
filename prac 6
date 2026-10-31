@@ -1,0 +1,13 @@
+import numpy as np
+from scipy.stats import norm
+
+# Generate synthetic data ~ Normal(μ=50, σ=10)
+np.random.seed(42)
+data = np.random.normal(loc=50, scale=10, size=100)
+
+# MLE estimates
+mu_mle = np.mean(data)
+sigma2_mle = np.mean((data - mu_mle)**2)
+
+print(f"MLE Mean (μ): {mu_mle:.2f}")
+print(f"MLE Variance (σ²): {sigma2_mle:.2f}")
