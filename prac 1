@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("customer_data.csv")
+
+# Select numeric columns
+numeric_df = df.select_dtypes(include=['number'])
+
+# Plot histogram
+numeric_df.hist(figsize=(12, 8))
+plt.suptitle("Histogram of Numeric Columns")
+plt.show()
+
+# Calculate correlation matrix
+corr = numeric_df.corr()
+
+print("Correlation Matrix:")
+print(corr)
+
+# Plot heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.title("Correlation Heatmap")
+plt.show()
