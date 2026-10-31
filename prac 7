@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 # Load data and pick two columns to cluster on
-df = pd.read_csv("C:/Users/Varalakshmi/Downloads/Social_Network_Ads.csv")
+df = pd.read_csv(r"C:\Users\Avisha\Downloads\Social_Network_Ads - Social_Network_Ads.csv")
 X = df[["Age", "EstimatedSalary"]]
 
 # Scale so Age and Salary count equally
