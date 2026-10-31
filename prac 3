@@ -1,9 +1,12 @@
 import pandas as pd
-import seaborn as sns
-from sklearn.model_selection import train_test_split
 
-# Load Penguin dataset
-df = sns.load_dataset('penguins')
+# Load Penguin dataset directly from URL
+url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv"
+
+df = pd.read_csv(url)
+
+print("Original Dataset:")
+print(df.head())
 
 # Remove missing values
 df = df.dropna()
@@ -11,23 +14,20 @@ df = df.dropna()
 # Simple Random Sampling
 simple_sample = df.sample(n=20, random_state=42)
 
-print("Simple Random Sample:")
+print("\nSimple Random Sampling:")
 print(simple_sample)
 
 # Stratified Sampling
-train, test = train_test_split(
-    df,
-    test_size=0.2,
-    random_state=42,
-    stratify=df['species']
-)
+stratified_sample = df.groupby(
+    'species', group_keys=False
+).sample(frac=0.2, random_state=42)
 
-print("\nStratified Sample:")
-print(test)
+print("\nStratified Sampling:")
+print(stratified_sample)
 
-# Check species distribution
-print("\nOriginal Distribution:")
-print(df['species'].value_counts(normalize=True))
+# Check distribution
+print("\nOriginal Species Distribution:")
+print(df['species'].value_counts())
 
 print("\nStratified Sample Distribution:")
-print(test['species'].value_counts(normalize=True))
+print(stratified_sample['species'].value_counts())
