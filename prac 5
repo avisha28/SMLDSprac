@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load Iris dataset from GitHub
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+df = pd.read_csv(url)
+df.head()
+
+# Define groups correctly
+setosa = df[df['species']=='setosa']['petal_length'].values
+versicolor = df[df['species']=='versicolor']['petal_length'].values
+
+
+# Bootstrap resampling
+n_boot = 5000
+boot_means = []
+for _ in range(n_boot):
+    sample = np.random.choice(df['petal_length'], size=len(df['petal_length']), replace=True)
+    boot_means.append(np.mean(sample))
+
+# 95% CI
+ci_lower, ci_upper = np.percentile(boot_means, [2.5, 97.5])
+print(f"Bootstrap 95% CI for mean petal length: ({ci_lower:.2f}, {ci_upper:.2f})")
+
+# Visualization
+plt.figure(figsize=(8,5))
+plt.hist(boot_means, bins=40, color="skyblue", edgecolor="black")
+plt.axvline(ci_lower, color="red", linestyle="--", label=f"Lower 95% CI = {ci_lower:.2f}")
+plt.axvline(ci_upper, color="red", linestyle="--", label=f"Upper 95% CI = {ci_upper:.2f}")
+plt.axvline(np.mean(df['petal_length']), color="green", linestyle="-", label=f"Observed Mean = {np.mean(df['petal_length']):.2f}")
+plt.title("Bootstrap Distribution of Mean Petal Length")
+plt.xlabel("Mean Petal Length")
+plt.ylabel("Frequency")
+plt.legend()
+plt.show()  
+
+
